@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "your-repo-url"
+    "url": "https://github.com/bappidn/react-native-customTexInputField"
   },
   "keywords": [
     "react-native",
