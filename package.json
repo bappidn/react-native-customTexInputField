@@ -1,0 +1,21 @@
+{
+  "name": "react-native-customtextinputfield",
+  "version": "1.0.0",
+  "description": "A customizable and reusable text input field component for React Native. ",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "your-repo-url"
+  },
+  "keywords": [
+    "react-native",
+    "custom",
+    "text-input",
+    "component"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bappi Debnath",
+  "license": "ISC"
+}
