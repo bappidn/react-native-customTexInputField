@@ -43,6 +43,11 @@ const CustomTextInputField = ({
       return;
     }
 
+    if (onChangeText.length >= 2) {
+      onChangeText(undefined, trimmedText);
+      return;
+    }
+
     onChangeText(trimmedText);
   };
 
