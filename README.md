@@ -1,36 +1,30 @@
-cat <<EOF > README.md
-# react-native-customTexInputField
+# react-native-customtextinputfield
 
 A customizable and reusable text input field component for React Native.
 
 ## Installation
 
-You can install \`react-native-customTexInputField\` via npm or yarn:
+Install from npm:
 
-\`\`\`bash
-npm install react-native-customTexInputField
-\`
+```bash
+npm install react-native-customtextinputfield
+```
+
 or
-\`\`\`bash
-yarn add react-native-customTexInputField
-\`
+
+```bash
+yarn add react-native-customtextinputfield
+```
 
 ## Usage
 
-Import the \`CustomTextInputField\` component in your React Native project and use it as follows:
-
-\`\`\`javascript
+```javascript
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import CustomTextInputField from 'react-native-customTexInputField';
+import CustomTextInputField from 'react-native-customtextinputfield';
 
 const App = () => {
   const [username, setUsername] = useState('');
-
-  const handleTextChange = (key, text) => {
-    // Handle text change logic here
-    setUsername(text);
-  };
 
   return (
     <View style={styles.container}>
@@ -38,8 +32,8 @@ const App = () => {
         title="Username"
         placeholder="Enter your username"
         value={username}
-        onChangeText={(key, text) => handleTextChange('username', text)}
-        isMandatory={true}
+        onChangeText={setUsername}
+        isMandatory
         maxLength={20}
       />
     </View>
@@ -56,23 +50,35 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-\`\`\`
+```
+
+### Using `inputKey` callback style
+
+If you prefer form-style handlers:
+
+```javascript
+<CustomTextInputField
+  inputKey="username"
+  value={username}
+  onChangeText={(key, text) => {
+    // key => "username"
+    setUsername(text);
+  }}
+/>
+```
 
 ## Props
 
-- **\`title\`** _(string, required)_: Title of the input field.
-- **\`placeholder\`** _(string)_: Placeholder text when input is empty.
-- **\`value\`** _(string)_: Current value of the input field.
-- **\`isMandatory\`** _(boolean)_: Flag indicating if the field is mandatory.
-- **\`onChangeText\`** _(function, required)_: Callback function called when the text input changes.
-- **\`maxLength\`** _(number)_: Maximum length of the input value.
-- **\`...\`** _(other props)_: Refer to \`CustomTextInputField.js\` for a complete list of props.
-
-## Contributing
-
-Contributions are welcome! If you have suggestions, enhancements, or bug fixes, please fork the repository and submit a pull request.
+- `title` *(string)*: Title of the input field.
+- `placeholder` *(string)*: Placeholder text when input is empty.
+- `value` *(string)*: Current value of the input field.
+- `isMandatory` *(boolean)*: Flag indicating if the field is mandatory.
+- `onChangeText` *(function)*: Callback called with `(text)` or `(inputKey, text)`.
+- `inputKey` *(string)*: Optional field key for form-style callbacks.
+- `maxLength` *(number)*: Maximum length of the input value.
+- `editable` *(boolean)*: Whether the input is editable (default: `true`).
+- `multiline` *(boolean)*: Whether the input is multiline.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-EOF
+This project is licensed under the MIT License.

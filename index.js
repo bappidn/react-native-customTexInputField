@@ -7,37 +7,51 @@ const CustomTextInputField = ({
   title,
   placeholder,
   value,
-  isMandatory,
+  isMandatory = false,
   inputKey,
-  validateExtraField,
-  showError,
+  validateExtraField = false,
+  showError = false,
   customOnChangeText,
   onChangeText,
-  editable,
+  editable = true,
   containerStyle,
   inputBoxStyle,
   maxLength,
   validationMessage,
   customStyle,
-  showOnlyValue,
-  numberOfLines,
-  keyboardType,
+  showOnlyValue = false,
+  numberOfLines = 3,
+  keyboardType = "default",
   trimValidationFunc,
   multiline = false,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const mandatoryIcon = <Text style={styles.mandatoryIconText}> *</Text>;
 
-  const handleTextInput = (key, text) => {
+  const handleTextInput = (text) => {
     let trimmedText = text?.trimStart();
     trimmedText = trimValidationFunc
       ? trimValidationFunc(trimmedText)
       : trimmedText;
+
     setInputValue(trimmedText);
-    return onChangeText(key, trimmedText);
+
+    if (!onChangeText) return;
+
+    if (inputKey !== undefined && inputKey !== null) {
+      onChangeText(inputKey, trimmedText);
+      return;
+    }
+
+    if (onChangeText.length >= 2) {
+      onChangeText(undefined, trimmedText);
+      return;
+    }
+
+    onChangeText(trimmedText);
   };
 
-  const placeholderText = placeholder ? placeholder : `Enter ${title}`;
+  const placeholderText = placeholder || (title ? `Enter ${title}` : "Enter value");
 
   return (
     <SafeAreaView>
@@ -71,8 +85,8 @@ const CustomTextInputField = ({
                 </View>
               ) : (
                 <TextInput
-                  testID={`CustomTextInputField-${inputKey}`}
-                  value={value || inputValue}
+                  testID={`CustomTextInputField-${inputKey || "value"}`}
+                  value={value ?? inputValue}
                   placeholder={placeholderText}
                   style={[
                     multiline ? styles.textArea : styles.textInput,
@@ -86,7 +100,7 @@ const CustomTextInputField = ({
                   onChangeText={
                     customOnChangeText
                       ? customOnChangeText
-                      : (text) => handleTextInput(inputKey, text)
+                      : (text) => handleTextInput(text)
                   }
                   maxLength={maxLength}
                   multiline={multiline}
@@ -121,13 +135,13 @@ CustomTextInputField.propTypes = {
   validateExtraField: PropTypes.bool,
   showError: PropTypes.bool,
   customOnChangeText: PropTypes.func,
-  onChangeText: PropTypes.func.isRequired,
+  onChangeText: PropTypes.func,
   editable: PropTypes.bool,
-  containerStyle: PropTypes.object,
-  inputBoxStyle: PropTypes.object,
+  containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  inputBoxStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   maxLength: PropTypes.number,
   validationMessage: PropTypes.string,
-  customStyle: PropTypes.object,
+  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   showOnlyValue: PropTypes.bool,
   numberOfLines: PropTypes.number,
   keyboardType: PropTypes.string,
